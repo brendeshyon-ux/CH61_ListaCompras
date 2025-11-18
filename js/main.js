@@ -87,6 +87,16 @@ btnAgregar.addEventListener("click", function (event) {
             { style: "currency", currency: "MXN" }).format(costoTotal);
         //esto sirve para mostrar el costo total de los productos agregados y para darle formato de moneda MXN.
 
+        let resumen = {
+            "cont": cont,
+            "totalEnProductos": totalEnProductos,
+            "costoTotal": costoTotal
+        };
+        //esto sirve para crear un objeto con el resumen de la lista de compras.
+
+        localStorage.setItem("resumen", JSON.stringify(resumen));
+        //esto sirve para guardar el resumen de la lista de compras en el localStorage.
+
         txtName.value = "";
         txtNumber.value = "";
         //esto sirve para limpiar los campos de texto despues de agregar un producto.
@@ -96,5 +106,23 @@ btnAgregar.addEventListener("click", function (event) {
     }
 
     console.log(txtName.value);
+    //esto sirve para mostrar en consola el nombre del producto agregado.
+
+});
+
+window.addEventListener("load", function (event) {
+    event.preventDefault();
+    if (this.localStorage.getItem("resumen")) {
+        let resumen = JSON.parse(this.localStorage.getItem("resumen"));
+        cont = resumen.cont;
+        totalEnProductos = resumen.totalEnProductos;
+        costoTotal = resumen.costoTotal;
+    } //Esto sirve para obtener el resumen de la lista de compras del localStorage al cargar la pagina.
+
+    contadorProductos.innerText = cont;
+    productosTotal.innerText = totalEnProductos;
+    precioTotal.innerText = new Intl.NumberFormat("es-MX",
+        { style: "currency", currency: "MXN" }).format(costoTotal);
+    //window load, Esto sirve para mostrar los valores del resumen en la pagina al cargarla.
 
 });
