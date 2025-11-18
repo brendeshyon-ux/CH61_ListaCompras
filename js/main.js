@@ -8,6 +8,8 @@ const precioTotal = document.getElementById("precioTotal");
 const tablaListaCompras = document.getElementById("tablaListaCompras");
 const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
 //esto sirve para obtener el cuerpo de la tabla donde se van a agregar los productos.
+const productosTotal = document.getElementById("productosTotal");
+//esto sirve para mostrar la cantidad total de productos agregados.
 
 
 let cont = 0;
@@ -70,13 +72,13 @@ btnAgregar.addEventListener("click", function (event) {
         </tr>`;
         //esto sirve para crear una fila en la tabla con los datos del producto agregado.
         console.log(getPrecio);
-        
+
         totalEnProductos += Number(txtNumber.value);
         //Esto sirve para sumar la cantidad de productos agregados.
         costoTotal += precio * Number(txtNumber.value);
         //Esto sirve para sumar el costo total de los productos agregados.
 
-        cuerpoTabla.insertAdjacentElement("beforeend", row);
+        cuerpoTabla.insertAdjacentHTML("beforeend", row);
         contadorProductos.innerText = cont;
         //esto sirve para mostrar la cantidad de productos agregados.
         productosTotal.innerText = totalEnProductos;
@@ -90,8 +92,6 @@ btnAgregar.addEventListener("click", function (event) {
         //esto sirve para limpiar los campos de texto despues de agregar un producto.
         txtName.focus();
         //esto sirve para poner el foco en el campo de texto del nombre despues de agregar un producto.
-
-
 
     }
 
