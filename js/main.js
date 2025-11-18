@@ -10,6 +10,8 @@ const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
 //esto sirve para obtener el cuerpo de la tabla donde se van a agregar los productos.
 const productosTotal = document.getElementById("productosTotal");
 //esto sirve para mostrar la cantidad total de productos agregados.
+const btnClear = document.getElementById("btnClear");
+//esto sirve para obtener el boton de limpiar lista.
 
 
 let cont = 0;
@@ -41,6 +43,7 @@ function getPrecio() {
 }//getPrecio genera un precio aleatorio entre 0 y 100.00
 
 btnAgregar.addEventListener("click", function (event) {
+    //el addEventListener sirve para agregar un evento al boton de agregar producto.
     event.preventDefault();
     let isValid = true;
     txtName.style.border = "";
@@ -126,6 +129,35 @@ btnAgregar.addEventListener("click", function (event) {
 
 });
 
+btnClear.addEventListener("click", function (event) {
+    event.preventDefault();
+    //Esto sirve para evitar que el boton recargue la pagina.
+    localStorage.clear();
+    //Esto sirve para limpiar el localStorage.
+
+    txtName.value = "";
+    txtNumber.value = "";
+    txtName.style.border = "";
+    txtNumber.style.border = "";
+    //Esto limpia los campos de texto y los bordes de validacion.
+    cuerpoTabla.innerHTML = "";
+    //Esto limpia el cuerpo de la tabla.
+    contadorProductos.innerText = "0";
+    productosTotal.innerText = "0";
+    precioTotal.innerText = "$0.00";
+    //Esto reinicia los valores del resumen en la pagina.
+    alertValidacionesTexto.innerHTML = "";
+    alertValidaciones.style.display = "none";
+    //Esto limpia las validaciones.
+
+    cont = 0;
+    datos = [];
+    totalEnProductos = 0;
+    costoTotal = 0;
+    //Esto reinicia las variables que almacenan los datos de la lista de compras.
+     
+});
+
 window.addEventListener("load", function (event) {
     event.preventDefault();
 
@@ -143,7 +175,7 @@ window.addEventListener("load", function (event) {
 
             cuerpoTabla.insertAdjacentHTML("beforeend", row);
         });
-    }//Esto sirve para obtener los datos de los productos agregados del localStorage al cargar la pagina.
+    }//Esto sirve para obtener los datos de los productos agregados del localStorage al cargar la pagina y para que los datos agregados se muestren en la tabla.
 
 
 
@@ -162,4 +194,5 @@ window.addEventListener("load", function (event) {
     //window load, Esto sirve para mostrar los valores del resumen en la pagina al cargarla.
 
 });
+
 
