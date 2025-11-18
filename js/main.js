@@ -20,6 +20,8 @@ let costoTotal = 0;
 //esto sirve para sumar el costo total de los productos agregados.
 let precioProducto = 0;
 //esto sirve para almacenar el precio de cada producto agregado.
+let datos = [];
+//esto sirve para almacenar los datos de los productos agregados.
 
 function validarCantidad(cantidad) {
     if (cantidad.length == 0) {
@@ -71,6 +73,20 @@ btnAgregar.addEventListener("click", function (event) {
         <td>${precio}</td>
         </tr>`;
         //esto sirve para crear una fila en la tabla con los datos del producto agregado.
+
+        let elemento = {
+            "cont": cont,
+            "nombre": txtName.value,
+            "cantidad": txtNumber.value,
+            "precio": precio
+        }; //esto sirve para crear un objeto con los datos del producto agregado.
+
+        datos.push(elemento);
+        //esto sirve para agregar el objeto a un arreglo de datos.
+        localStorage.setItem("datos", JSON.stringify(datos));
+        //esto sirve para guardar el arreglo de datos en el localStorage, lo convertimos con stringify para que se guarde como una cadena de texto.
+
+
         console.log(getPrecio);
 
         totalEnProductos += Number(txtNumber.value);
@@ -112,6 +128,26 @@ btnAgregar.addEventListener("click", function (event) {
 
 window.addEventListener("load", function (event) {
     event.preventDefault();
+
+
+    if (this.localStorage.getItem("datos") != null) {
+        datos = JSON.parse(this.localStorage.getItem("datos"));
+        datos.forEach((e) => {
+
+            let row = `<tr>
+            <td>${e.cont}</td>
+            <td>${e.nombre}</td>
+            <td>${e.cantidad}</td>
+            <td>${e.precio}</td>
+            </tr>`;
+
+            cuerpoTabla.insertAdjacentHTML("beforeend", row);
+        });
+    }//Esto sirve para obtener los datos de los productos agregados del localStorage al cargar la pagina.
+
+
+
+
     if (this.localStorage.getItem("resumen")) {
         let resumen = JSON.parse(this.localStorage.getItem("resumen"));
         cont = resumen.cont;
@@ -126,3 +162,4 @@ window.addEventListener("load", function (event) {
     //window load, Esto sirve para mostrar los valores del resumen en la pagina al cargarla.
 
 });
+
